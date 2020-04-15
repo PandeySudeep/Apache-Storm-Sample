@@ -1,0 +1,5 @@
+public void prepare(Map stormConf, TopologyContext context) {
+		this.counters = new HashMap<String, Integer>();
+		this.name = context.getThisComponentId();
+		this.id = context.getThisTaskId();
+

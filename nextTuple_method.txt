@@ -1,0 +1,26 @@
+public void nextTuple() {
+           
+		if(completed){
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				//Do nothing
+			}
+			return;
+		}
+		String str;
+		//Open the reader
+		BufferedReader reader = new BufferedReader(fileReader);
+		
+try{
+			//Read all lines
+			while((str = reader.readLine()) != null){
+
+				this.collector.emit(new Values(str),str);
+			}
+		}catch(Exception e){
+			throw new RuntimeException("Error reading tuple",e);
+		}finally{
+			completed = true;
+		}
+	}

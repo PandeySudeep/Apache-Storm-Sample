@@ -1,0 +1,31 @@
+TopologyBuilder builder = new TopologyBuilder();
+	builder.setSpout("word-reader",new WordReader());
+	builder.setBolt("word-normalizer", new WordNormalizer())
+		.shuffleGrouping("word-reader");
+// via shuffleGrouping, we direct any specific line emitted by the spout // to be fed to any instance of the WordNormalizer bolt.
+	builder.setBolt("word-counter", new WordCounter(),int n)
+//parameter ‘n’ specifies the number of parallelism i.e. ‘n’ instances of //WordCounter bolt will run. For both the two previous components, the   //parallelism is 1. This is default value.
+		.fieldsGrouping("word-normalizer", new Fields("word"));
+// via fieldsGrouping, we make sure that a specific word will pass to only // a specific instance of a bolt. This will make sure the count will be   // accurate.
+		
+//Configuration
+	Config conf = new Config();
+	conf.put("wordsFile", args[0]);
+//we will pass the name of the input file as the only argument during    //Storm command to run the jar.
+	conf.setDebug(true);
+//’true’ will debug our program during runtime.
+    
+//Topology run
+	conf.put(Config.TOPOLOGY_MAX_SPOUT_PENDING, 1);
+     LocalCluster cluster = new LocalCluster();
+	cluster.submitTopology("Getting-Started-Topology", conf,  
+       builder.createTopology());
+	Utils.sleep(10000);
+	cluster.killTopology("Getting-Started-Topology");
+	cluster.shutdown();
+
+
+
+
+
+

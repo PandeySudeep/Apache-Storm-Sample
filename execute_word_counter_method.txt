@@ -1,0 +1,11 @@
+public void execute(Tuple input, BasicOutputCollector collector) {
+		String str = input.getString(0);
+	
+		if(!counters.containsKey(str)){
+			counters.put(str, 1);
+		}else{
+			Integer c = counters.get(str) + 1;
+			counters.put(str, c);
+		}
+	}
+}
