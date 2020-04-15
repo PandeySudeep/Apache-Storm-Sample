@@ -1,10 +1,10 @@
-#USING_PERSONAL_WINDOWS_LAPTOP_MACHINE_TO_RUN_TOPOLOGY_APACHE_STORM
+# USING_PERSONAL_WINDOWS_LAPTOP_MACHINE_TO_RUN_TOPOLOGY_APACHE_STORM
 
 A Linux-based Virtual environment can be created in a Windows-based personal laptop machine and real-time streaming framework can be set up. The framework will be a combination of – single node cluster, Apache Zookeeper, Apache Storm, Ubuntu, Eclipse IDE, JAVA, Python, Apache Maven and Oracle Virtual-Box. The article will act as a suitable guide to create this combination, build a real Storm topology, run the topology, and analyze results/logs. The scope of the article will not include step-by-step guide to create virtual system set up but just an overview of it. Details of those steps can be found via Internet sources. The major focus of this article will shift towards the details of the Storm Topology that will be used to run in the machine.
 
 An Apache Storm topology that counts the words in a file will be written and run using the virtual environment. The topology was referenced from a published book “Getting Started With Storm” by Jonathan Leibiusky, Gabriel Eisbruck and Dario Simonassi (O’Reilly).” As per the book’s advice, I will not copy-paste the entire code here in this article since I don’t have permission to do it. To get the entire code, please purchase the book. However, I will discuss key sections of the topology in relevance to Apache Storm real-time streaming framework and API and cover topics like ‘guaranteed message processing’, ‘parallel-processing’, ‘running topology in local-cluster’, ‘configurations’ etc. I will then finally display the command to run the topology in Ubuntu machine terminal and also display results and discuss the logs. 
 
-##Setting Up Virtual Machine
+## Setting Up Virtual Machine
 
 The first step to create a virtual environment to execute Storm Topology is to install a virtual machine. An Oracle VM VirtualBox was used for this purpose. This virtual machine can be downloaded free from internet-based source and installation process is also simple and straightforward.
 
@@ -15,7 +15,7 @@ The starting point to set up Ubuntu is to run the virtual machine and click on �
 A new virtual machine with Ubuntu was created following series of manual steps. The individual steps will not be documented in this article as it doesn’t serve the purpose of the article. Step by step guide to set up is easily available via Internet and is easy.
 
 
-##Setting Up Apache Storm
+## Setting Up Apache Storm
 
 The third step after Ubuntu set up is to install Apache Storm and Apache Zookeeper in the Ubuntu system.
 Following is a list of steps to perform:
@@ -36,13 +36,13 @@ Following is a list of steps to perform:
 
 These are the key steps to get things set up. However, the details of steps are not included. For this, I suggest to refer to storm installation information available in various Internet sources. The scope of this article doesn’t cover comprehensive explanation of all the steps needed for environment and system set up. However, explanation of Storm Topology, execution of topology and result analysis will be handled with details.
 
-##About Our Topology:
+## About Our Topology:
 
 The Storm topology that will be used during the experiment will be the ‘Word Count’ topology that counts words present in an input file. The topology will consist of three components:
 
-####WordReader Spout
-####WordNormalizer Bolt
-####WordCounter Bolt
+#### WordReader Spout
+#### WordNormalizer Bolt
+#### WordCounter Bolt
 
 Before we cover each code in details, let’s talk about how to build the project once we finish writing the application source codes and putting them in folder just like for any JAVA application. The purpose here is to import Storm dependencies (a set of jars to include in application classpath). For this there are two options:
 a.	Download the dependencies, unpack them, and add them to classpath.
@@ -118,7 +118,7 @@ public void fail(Object msgId) {
 		System.out.println("FAIL:"+msgId);
 	}
 
-##Final Note:
+## Final Note:
 Other than the methods inherited from java.lang.Object that include (clone(), equals(), finalize(), getClass(), hashCode(), notify(), notifyAll(), toString(), wait(), wait(), wait()), our spout ‘WordReader’ own the methods namely – declareOutputFields(), getComponentConfiguration(), open(), nextTuple(), ack(), fail(), activate(), deactivate(), close().
 
 Now, we will move towards our first bolt – WordNormalizer:
@@ -158,7 +158,7 @@ Using ‘execute_word_counter_method.txt’, we will count the incoming words an
 ‘cleanup_method.txt’ will print the words and the counts after the topology has been shut down.
 The final piece of code to discuss is the TopologyBuilder class for our topology. The key portion of the code will look like ‘topology.txt’.
   
-##Running the Topology
+## Running the Topology
 
 We now need to open the terminal in Ubuntu desktop and enter the Storm installation directory that has folder named ‘bin’. The following command then needs to be run:
 
@@ -168,9 +168,9 @@ bin/storm [space]  jar [space]   /path/name of storm jar [space] /package/name o
 
 When we hit enter, storm starts streaming using configurations from default.yaml, storm.yaml and other component-specific configurations.
 
-###Good Luck.
+### Good Luck.
 
-##Analyzing Results
+## Analyzing Results
 
 ‘finallog.txt’ is the log file after successful run.
 
@@ -178,7 +178,7 @@ When we hit enter, storm starts streaming using configurations from default.yaml
 
 ‘wc_result.png’ represents execution of ‘clean’ method as seen in the log within our second bolt class.
 
-##End Notes
+## End Notes
 
 During this experiment, I used Eclipse IDE, imported storm jars into classpath, created storm application jar and executed.
 
